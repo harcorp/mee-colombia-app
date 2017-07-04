@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-auto>
+          <ion-title>
+            Transacciones
+          </ion-title>
+        </ion-col>
+        <ion-col clear text-right hideWhen="android,ios">
+          <img alt="logo" height="40" src="assets/img/logo.png" >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+        <ion-col>
+          <h1>Saldo Total: <span>{{ (saldos | async )?.saldo_canje + (saldos | async )?.saldo | currency:'COP':true:'1.0'}}</span></h1>
+          <h2>Saldo Canje: <span>{{ (saldos | async )?.saldo_canje | currency:'COP':true:'1.0'}}</span></h2>
+          <h2>Saldo disponible: <span>{{ (saldos | async )?.saldo | currency:'COP':true:'1.0'}}</span></h2>
+        </ion-col>
+      <ion-col>
+  <ion-card *ngFor="let item of items | async">
+    <ion-card-content>
+      <h2>{{ item.valor | currency:'COP':true:'1.0'}}</h2>
+      <ion-row>
+        
+        <ion-col *ngIf="item.tipo == 1">
+          <ion-chip color="secondary">
+            <ion-icon name="arrow-forward" color="dark"></ion-icon>
+            <ion-label>Entrada</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col *ngIf="item.tipo == 2">
+          <ion-chip color="danger">
+            <ion-icon name="arrow-back" color="dark"></ion-icon>
+            <ion-label>Retiro</ion-label>
+          </ion-chip>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left clear small>
+            <ion-icon name="calendar"></ion-icon>
+            <div> {{ item.timestamp * -1000 | date }}</div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab bottom right>
+  <button ion-fab color="secondary" (click)="presentActionSheet()" icon-only><ion-icon name="apps"></ion-icon></button>
+</ion-fab>
+</ion-content>

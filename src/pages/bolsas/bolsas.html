@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-auto>
+          <ion-title>
+            Bolsas
+          </ion-title>
+        </ion-col>
+        <ion-col clear text-right hideWhen="android,ios">
+          <img alt="logo" height="40" src="assets/img/logo.png" >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+<ion-row>
+  <ion-col *ngFor="let item of items | async">
+  <ion-card color="primary" *ngIf="item.enabled">
+    <ion-card-header>
+      Bolsa Activa
+    </ion-card-header>
+      <ion-item *ngFor="let afl of item.afiliados | derp">
+        <ion-icon name="contact" item-start large></ion-icon>
+        <h2 style="color:black"><b>Afiliado:</b> {{ afl.value.nombre }}</h2>
+        <p><b>Fecha:</b> {{ afl.value.timestamp * 1000 | date }}</p>
+      </ion-item>
+
+      <ion-item> 
+        <span item-left ><b>Ganado:</b> {{ item.valor |  currency:'COP':true:'1.0' }}</span>
+        <span item-left ><b>SubAfiliados:</b> {{ item.subafl}}</span>       
+      </ion-item>
+      <ion-item>
+        <ion-note item-left>{{ item.timestamp * 1000 | date }} </ion-note>
+        <button ion-button icon-left clear item-end>
+          <ion-icon name="arrow-dropdown-circle"></ion-icon>
+            Retirar
+        </button>
+      </ion-item>
+  </ion-card>
+  <ion-card color="secondary" *ngIf="!item.enabled">
+    <ion-card-header>
+      Bolsa No Activa
+    </ion-card-header>
+    <ion-item>
+      <h2 style="color:black">Debe activar la bolsa para poder asociar afiliados</h2>
+    </ion-item>
+    <ion-item>
+          <button ion-button icon-left clear item-end>
+          <ion-icon name="checkmark-circle"></ion-icon>
+            Activar
+        </button>
+        </ion-item>
+  </ion-card>
+  </ion-col>
+</ion-row>
+<ion-fab bottom right>
+  <button ion-fab color="secondary" (click)="presentActionSheet()" icon-only><ion-icon name="apps"></ion-icon></button>
+</ion-fab>
+</ion-content>

@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-auto>
+          <ion-title>
+            Registro
+          </ion-title>
+        </ion-col>
+        <ion-col clear text-right hideWhen="android,ios">
+          <img alt="logo" height="40" src="assets/img/logo.png" >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-item>
+    <ion-label floating>Correo Electronico</ion-label>
+    <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Contraseña</ion-label>
+    <ion-input type="text" [(ngModel)]="user.password"></ion-input>
+  </ion-item>
+  <button ion-button (click)="register(user)">Registrarse</button>
+</ion-content>

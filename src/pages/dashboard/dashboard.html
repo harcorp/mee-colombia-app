@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-auto>
+          <ion-title class="md ios">
+            Dashboard
+          </ion-title>
+        </ion-col>
+        <ion-col clear text-right hideWhen="android,ios">
+          <img alt="logo" height="40" src="assets/img/logo.png" >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-row>
+    <ion-col>
+      <ion-card color="primary">
+        <ion-card-header>
+        Noticias
+        </ion-card-header>
+          <ion-item *ngFor="let noticia of noticias | async">
+            <span item-star><h2 style="color: #222">{{ noticia.titulo }}</h2></span>
+            <ion-note item-end clear>{{ noticia.timestamp * -1000 | date }}</ion-note>
+            <p>{{ noticia.contenido }}</p>
+          </ion-item>
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <ion-card color="primary">
+        <ion-card-header>
+          Resumen Cuenta
+        </ion-card-header>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,44 @@
+<ion-content class="login-content" padding>
+    <ion-row class="logo-row">
+      <ion-col hideWhen="android,ios"></ion-col>
+      <ion-col class="logo-imagen">
+          <img src="assets/img/logo.png" alt="MEE Colombia" />
+      </ion-col>
+      <ion-col hideWhen="android,ios"></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col hideWhen="android,ios"></ion-col>
+      <ion-col>
+          <ion-card>
+            <ion-list inset>
+                <ion-item>
+                  <ion-label color="primary" stacked>Correo Electronico</ion-label>
+                  <ion-input type="email" [(ngModel)]="user.email"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label color="primary" stacked>Contraseña</ion-label>
+                  <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+                </ion-item>         
+            </ion-list>
+            <ion-row>
+              <ion-col class="signup-col">
+                <ion-row>
+                  <ion-col>
+                    <button ion-button outline block (click)="login(user)">Ingresar</button>
+                  </ion-col>
+                  <ion-col>
+                    <button ion-button outline block (click)="createAccount()">Registrarse</button>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <button ion-button outline block (click)="signInWithFacebook()">Ingresar con Facebook</button> 
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+      </ion-col>
+      <ion-col hideWhen="android,ios"></ion-col>
+    </ion-row>
+</ion-content>
