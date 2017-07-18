@@ -23,9 +23,22 @@
   <ion-grid>
     <ion-row>
         <ion-col>
-          <h1>Saldo Total: <span>{{ (saldos | async )?.saldo_canje + (saldos | async )?.saldo | currency:'COP':true:'1.0'}}</span></h1>
-          <h2>Saldo Canje: <span>{{ (saldos | async )?.saldo_canje | currency:'COP':true:'1.0'}}</span></h2>
-          <h2>Saldo disponible: <span>{{ (saldos | async )?.saldo | currency:'COP':true:'1.0'}}</span></h2>
+          <ion-card>
+            <ion-card-content>
+              <h1>Saldo Total: <span>{{ (saldos | async )?.saldo_canje + (saldos | async )?.saldo | currency:'COP':true:'1.0'}}</span></h1>
+              <h2>Saldo Canje: <span>{{ (saldos | async )?.saldo_canje | currency:'COP':true:'1.0'}}</span></h2>
+              <h2>Saldo disponible: <span>{{ (saldos | async )?.saldo | currency:'COP':true:'1.0'}}</span></h2>
+            </ion-card-content>
+          </ion-card>
+          <ion-card>
+              <ion-card-header>	
+                  <h2>¿Que hacer antes de?</h2>
+              </ion-card-header>
+                <ion-card-content>
+                  <p>Recuerda que para recargar tu cuenta debes primero realizar una consignación mediante Nequi de bancolombia</p>
+                  <button ion-button full (click)="goToAyuda()">Sección de Ayuda</button>
+                </ion-card-content>
+            </ion-card>
         </ion-col>
       <ion-col>
   <ion-card *ngFor="let item of items | async">

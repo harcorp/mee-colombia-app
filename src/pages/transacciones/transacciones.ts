@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
 import {AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import {SafeResourceUrl, DomSanitizer} from '@angular/platform-browser';
+import { FaqPage } from "../faq/faq";
 
 @IonicPage()
 @Component({
@@ -17,10 +19,16 @@ export class TransaccionesPage {
 
   saldoActual: number;
   uid: String;
+
+  videoUrl: SafeResourceUrl;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
           afDB: AngularFireDatabase, private afAuth: AngularFireAuth,
-          public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
+          public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController,
+        private domSanitizer: DomSanitizer) {
     this.selectedItem = navParams.get('item');
+
+      this.videoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/aw5pMBeOWM0')
 
   afAuth.authState.subscribe(user => {
       if (user) {
@@ -45,6 +53,9 @@ export class TransaccionesPage {
     
   }
 
+  goToAyuda(){
+    this.navCtrl.setRoot(FaqPage);
+  }
    presentActionSheet() {
    let actionSheet = this.actionSheetCtrl.create({
      title: 'Operaciones',
@@ -53,7 +64,7 @@ export class TransaccionesPage {
          text: 'Recargar Cuenta',
          icon: 'arrow-dropup-circle',
          handler: () => {
-           
+           this.recargarCuenta();
          }
        },
        {
@@ -104,13 +115,32 @@ export class TransaccionesPage {
    alerta.addButton({
      text: 'Retirar',
      handler: data => {
-      this.solicitudes.push({
-        'type': 2,
-        'userUID': this.uid,
-        'valor': +data.valor,
-        'timestamp': Date.now() / 1000 | 0,
-        'aproved': false
-      });
+       if(data.valor < 60000){
+        return false;
+       }else{
+          const promise = this.solicitudes.push({
+            'type': 2,
+            'userUID': this.uid,
+            'valor': +data.valor,
+            'timestamp': Date.now() / 1000 | 0,
+            'aproved': false
+          });
+          promise.then(_ => {
+            let alert = this.alertCtrl.create({
+              title: 'Solicitud',
+              subTitle: '¡Su solicitud ha sido enviada con exito!',
+              buttons: ['Aceptar']
+            });
+            alert.present();
+          }).catch(err => {
+            let alert = this.alertCtrl.create({
+              title: 'Solicitud',
+              subTitle: '¡Su solicitud no se pudo completar! Por favor intente mas tarde.',
+              buttons: ['Aceptar']
+            });
+            alert.present();
+          });
+       }
      }
    });
    alerta.present();
